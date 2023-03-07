@@ -1,4 +1,4 @@
-package com.example.real_time_chat;
+package com.zerobase.real_time_chat;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
