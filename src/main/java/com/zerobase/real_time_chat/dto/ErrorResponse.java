@@ -1,4 +1,4 @@
-package com.zerobase.real_time_chat.user.exception;
+package com.zerobase.real_time_chat.dto;
 
 import com.zerobase.real_time_chat.type.ErrorCode;
 import lombok.AllArgsConstructor;
@@ -9,14 +9,10 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Builder
-public class RegistException extends RuntimeException{
+public class ErrorResponse {
 	private ErrorCode errorCode;
 	private String errorMessage;
-
-	public RegistException(ErrorCode errorCode){
-		this.errorCode = errorCode;
-	}
 }

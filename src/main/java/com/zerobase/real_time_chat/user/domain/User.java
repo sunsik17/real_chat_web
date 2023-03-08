@@ -1,5 +1,7 @@
 package com.zerobase.real_time_chat.user.domain;
 
+import com.zerobase.real_time_chat.domain.BaseTimeEntity;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -25,6 +27,7 @@ public class User extends BaseTimeEntity {
 	private Long id;
 
 	private String userName;
+	@Column(unique = true)
 	private String userEmail;
 	private String password;
 	private String phoneNumber;

@@ -12,7 +12,7 @@ import com.zerobase.real_time_chat.type.ErrorCode;
 import com.zerobase.real_time_chat.user.domain.User;
 import com.zerobase.real_time_chat.user.dto.RegisterUser;
 import com.zerobase.real_time_chat.user.dto.UserInfo;
-import com.zerobase.real_time_chat.user.exception.RegistException;
+import com.zerobase.real_time_chat.exception.RealChatWebException;
 import com.zerobase.real_time_chat.user.repository.UserRepository;
 import java.util.Optional;
 import org.junit.jupiter.api.DisplayName;
@@ -69,7 +69,7 @@ class UserServiceTest {
 				.build()));
 
 		//when
-		RegistException exception = assertThrows(RegistException.class,
+		RealChatWebException exception = assertThrows(RealChatWebException.class,
 			() -> userService.registerUser(
 				new RegisterUser.Request("aa@aa", "qwer", "aa", "0102222"))
 		);
