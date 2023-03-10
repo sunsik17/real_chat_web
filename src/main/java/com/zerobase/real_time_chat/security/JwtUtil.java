@@ -19,8 +19,8 @@ public class JwtUtil {
 		secretKey = value;
 	}
 
-	public static String getUserName(String token) {
-		return parseClaims(token).get("userName", String.class);
+	public static String getUserEmail(String token) {
+		return parseClaims(token).get("userEmail", String.class);
 	}
 
 	public static boolean validateToken(String token) {
@@ -40,9 +40,9 @@ public class JwtUtil {
 		}
 	}
 
-	public static String createToken(String userName, String key) {
+	public static String createToken(String userEmail, String key) {
 		Claims claims = Jwts.claims(); // 일종의 map
-		claims.put("userName", userName);
+		claims.put("userEmail", userEmail);
 
 		long time = System.currentTimeMillis();
 

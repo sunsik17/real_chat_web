@@ -23,9 +23,6 @@ import org.springframework.web.filter.OncePerRequestFilter;
 public class JwtFilter extends OncePerRequestFilter {
 	private static final String TOKEN_HEADER = "Authorization";
 	private static final String TOKEN_PREFIX = "Bearer ";
-//	private final UserService userService;
-//	@Value("${jwt.token.secret}")
-//	private final String secretKey;
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
 		FilterChain filterChain) throws ServletException, IOException {
@@ -44,15 +41,15 @@ public class JwtFilter extends OncePerRequestFilter {
 			filterChain.doFilter(request, response);
 			return;
 		}
-		//토큰에서 userName 꺼내기
 
-		String userName = JwtUtil.getUserName(token);
-		log.info("userName:{}", userName);
+		//토큰에서 email (PK) 꺼내기 -> api request 에 직접 넣어서 보내지 않고 토큰에서 꺼내서 넣을 예정 (유효성 검사 가능)
+		String userEmail = JwtUtil.getUserEmail(token);
+		log.info("userEmail:{}", userEmail);
 
 		//권한 부여
 		UsernamePasswordAuthenticationToken authenticationToken =
 			new UsernamePasswordAuthenticationToken(
-				userName, null, List.of(new SimpleGrantedAuthority("USER"))
+				userEmail, null, List.of(new SimpleGrantedAuthority("USER"))
 			);
 
 		//디테일

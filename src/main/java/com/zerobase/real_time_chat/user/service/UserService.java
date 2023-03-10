@@ -54,7 +54,7 @@ public class UserService {
 
 		validateLoginUser(user.getUserEmail(), request.getPassword());
 
-		return JwtUtil.createToken(user.getUsername(), key);
+		return JwtUtil.createToken(user.getUserEmail(), key);
 	}
 
 	private void validateLoginUser(String email, String password) {
