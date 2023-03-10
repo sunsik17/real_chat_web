@@ -23,6 +23,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 public class JwtFilter extends OncePerRequestFilter {
 	private static final String TOKEN_HEADER = "Authorization";
 	private static final String TOKEN_PREFIX = "Bearer ";
+	private static final String ROLE = "USER";
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
 		FilterChain filterChain) throws ServletException, IOException {
@@ -49,7 +50,7 @@ public class JwtFilter extends OncePerRequestFilter {
 		//권한 부여
 		UsernamePasswordAuthenticationToken authenticationToken =
 			new UsernamePasswordAuthenticationToken(
-				userEmail, null, List.of(new SimpleGrantedAuthority("USER"))
+				userEmail, null, List.of(new SimpleGrantedAuthority(ROLE))
 			);
 
 		//디테일

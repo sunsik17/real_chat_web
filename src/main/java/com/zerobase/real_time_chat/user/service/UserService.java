@@ -52,16 +52,22 @@ public class UserService {
 			userRepository.findByUserEmail(request.getEmail())
 				.orElseThrow(() -> new RealChatWebException(INVALID_ACCOUNT));
 
-		validateLoginUser(user.getUserEmail(), request.getPassword());
+		validateLoginUser(user, request.getPassword());
 
 		return JwtUtil.createToken(user.getUserEmail(), key);
 	}
 
-	private void validateLoginUser(String email, String password) {
+	private void validateLoginUser(User user, String password) {
 
-		log.info("selectedPw:{} pw:{}", userRepository.findByUserEmail(email).get().getPassword(), password);
+		String encodingPassword =
+			userRepository.findByUserEmail(user.getUserEmail())
+				.orElseThrow(
+					() -> new RealChatWebException(INVALID_ACCOUNT)
+				).getPassword();
 
-		if (!encoder.matches(password, userRepository.findByUserEmail(email).get().getPassword())) {
+		log.info("selectedPw:{} pw:{}", encodingPassword, password);
+
+		if (!encoder.matches(password, encodingPassword)) {
 			throw new RealChatWebException(INVALID_ACCOUNT);
 		}
 	}
