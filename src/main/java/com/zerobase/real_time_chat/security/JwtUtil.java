@@ -13,6 +13,7 @@ import org.springframework.util.StringUtils;
 public class JwtUtil {
 
 	private static final Long expireTimeMilliSecond = 1000L * 60 * 60;
+	private static final String claimName = "userEmail";
 	private static String secretKey;
 	@Value("${jwt.token.secret}")
 	public void setSecretKey(String value){
@@ -20,7 +21,7 @@ public class JwtUtil {
 	}
 
 	public static String getUserEmail(String token) {
-		return parseClaims(token).get("userEmail", String.class);
+		return parseClaims(token).get(claimName, String.class);
 	}
 
 	public static boolean validateToken(String token) {
@@ -42,7 +43,7 @@ public class JwtUtil {
 
 	public static String createToken(String userEmail, String key) {
 		Claims claims = Jwts.claims(); // 일종의 map
-		claims.put("userEmail", userEmail);
+		claims.put(claimName, userEmail);
 
 		long time = System.currentTimeMillis();
 
