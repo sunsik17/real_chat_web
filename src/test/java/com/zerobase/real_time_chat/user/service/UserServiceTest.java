@@ -22,12 +22,16 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @ExtendWith(MockitoExtension.class)
 class UserServiceTest {
 
 	@Mock
 	private UserRepository userRepository;
+
+	@Mock
+	private BCryptPasswordEncoder encoder;
 
 	@InjectMocks
 	private UserService userService;
@@ -38,7 +42,7 @@ class UserServiceTest {
 
 		//given
 		given(userRepository.save(any()))
-			.willReturn(User.builder().userEmail("ss@ss").userName("ss").password("1234")
+			.willReturn(User.builder().userEmail("ss@ss").username("ss").password("1234")
 				.phoneNumber("0101111")
 				.build());
 
@@ -63,7 +67,7 @@ class UserServiceTest {
 		given(userRepository.findByUserEmail(anyString()))
 			.willReturn(Optional.ofNullable(User.builder()
 				.userEmail("ss@ss")
-				.userName("ss")
+				.username("ss")
 				.phoneNumber("010")
 				.password("1234")
 				.build()));

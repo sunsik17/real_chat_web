@@ -26,9 +26,9 @@ public class UserInfo {
 		return UserInfo
 			.builder()
 			.email(user.getUserEmail())
-			.name(user.getUserName())
+			.name(user.getUsername())
 			.phoneNumber(user.getPhoneNumber())
-			.createDateTime(LocalDateTime.now())
+			.createDateTime(user.getCreateDateTime())
 			.build();
 	}
 }

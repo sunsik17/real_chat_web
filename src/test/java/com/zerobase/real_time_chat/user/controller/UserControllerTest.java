@@ -2,6 +2,7 @@ package com.zerobase.real_time_chat.user.controller;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -18,6 +19,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.jpa.mapping.JpaMetamodelMappingContext;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
 @WebMvcTest(UserController.class)
@@ -36,12 +38,13 @@ class UserControllerTest {
 	private MockMvc mockMvc;
 
 	@Test
+	@WithMockUser
 	void registerSuccess() throws Exception {
 		//given
 
 		given(userService.registerUser(any()))
 			.willReturn(UserInfo.fromEntity(User.builder()
-				.userName("ss")
+				.username("ss")
 				.password("1234")
 				.userEmail("ss@ss")
 				.phoneNumber("010")
@@ -49,6 +52,7 @@ class UserControllerTest {
 		//when
 		//then
 		mockMvc.perform(post("/user/register")
+				.with(csrf())
 				.content(objectMapper.writeValueAsString(
 					new RegisterUser.Request("ss@ss",
 						"1234",
