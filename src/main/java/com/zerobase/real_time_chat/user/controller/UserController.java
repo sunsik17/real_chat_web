@@ -2,9 +2,13 @@ package com.zerobase.real_time_chat.user.controller;
 
 import com.zerobase.real_time_chat.user.dto.LoginUser;
 import com.zerobase.real_time_chat.user.dto.RegisterUser;
+import com.zerobase.real_time_chat.user.dto.UserInfo;
 import com.zerobase.real_time_chat.user.service.UserService;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,6 +37,14 @@ public class UserController {
 		return LoginUser.Response.from(
 			userService.login(request)
 		);
+	}
+
+	@GetMapping("/me/{email}")
+	@PreAuthorize("hasAnyAuthority('USER')")
+	public UserInfo details(
+		@PathVariable @Valid String email
+	) {
+		return userService.details(email);
 	}
 }
 

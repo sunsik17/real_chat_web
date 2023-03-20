@@ -1,8 +1,10 @@
 package com.zerobase.real_time_chat.security;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -12,22 +14,23 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
+@Slf4j
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig {
+
+	private final JwtFilter jwtFilter;
+
 	@Bean
-	public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
-		return httpSecurity
+	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+		return http
 			.httpBasic().disable()
 			.csrf().disable()
-			.cors().and()
-			.authorizeRequests()
-			.antMatchers("/user/register", "/user/login").permitAll() //인증필요없는 api
-			.antMatchers("/**")
-			.authenticated()
+			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 			.and()
-			.sessionManagement()
-			.sessionCreationPolicy(SessionCreationPolicy.STATELESS) // jwt를 사용하기 때문에 csrf보안을 사용할 필요x
+				.authorizeRequests()
+					.antMatchers("/user/register", "/user/login", "/ws/**").permitAll()
 			.and()
-			.addFilterBefore(new JwtFilter(), UsernamePasswordAuthenticationFilter.class)
+				.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
 			.build();
 	}
 }

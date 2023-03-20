@@ -9,6 +9,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.zerobase.real_time_chat.security.JwtUtil;
 import com.zerobase.real_time_chat.user.domain.User;
 import com.zerobase.real_time_chat.user.dto.RegisterUser;
 import com.zerobase.real_time_chat.user.dto.UserInfo;
@@ -30,6 +31,9 @@ class UserControllerTest {
 
 	@MockBean
 	private JpaMetamodelMappingContext context;
+
+	@MockBean
+	private JwtUtil jwtUtil;
 
 	@Autowired
 	private ObjectMapper objectMapper;
