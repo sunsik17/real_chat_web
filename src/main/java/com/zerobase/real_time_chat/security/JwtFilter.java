@@ -7,7 +7,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
@@ -46,12 +48,16 @@ public class JwtFilter extends OncePerRequestFilter {
 		String userEmail = jwtUtil.getUserEmail(token);
 		log.info("userEmail:{}", userEmail);
 
+		// 디테일 설정
+		UsernamePasswordAuthenticationToken authentication =
+			jwtUtil.getAuthentication(token);
+
+		authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+
 		//권한 부여
 		SecurityContextHolder
 			.getContext()
-			.setAuthentication(
-				jwtUtil.getAuthentication(token)
-			);
+			.setAuthentication(authentication);
 
 		filterChain.doFilter(request, response);
 	}

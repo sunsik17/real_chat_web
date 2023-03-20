@@ -1,5 +1,6 @@
 package com.zerobase.real_time_chat.chat.dto;
 
+import com.zerobase.real_time_chat.chat.domain.ChatMessageEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -15,4 +16,12 @@ public class ChatMessage {
 	private String sender;
 	private Long chatRoomId;
 	private Object message;
+
+	public static ChatMessage fromEntity(ChatMessageEntity entity) {
+		return ChatMessage.builder()
+			.sender(entity.getSenderEmail())
+			.chatRoomId(entity.getChatRoomEntity().getId())
+			.message(entity.getMessage())
+			.build();
+	}
 }
