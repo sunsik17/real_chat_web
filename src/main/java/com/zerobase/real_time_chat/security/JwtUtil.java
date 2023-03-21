@@ -16,10 +16,11 @@ import org.springframework.util.StringUtils;
 public class JwtUtil {
 
 	private static final Long expireTimeMilliSecond = 1000L * 60 * 60;
-	private static final String claimName = "userEmail";
+	private static final String CLAIM_KEY = "userEmail";
 	private static final String ROLE = "USER";
 	@Value("${jwt.token.secret}")
 	private String secretKey;
+
 
 	public String getUserEmail(String token) {
 		return parseClaims(token).get(claimName, String.class);

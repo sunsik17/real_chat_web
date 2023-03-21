@@ -69,7 +69,7 @@ public class UserService {
 	private void validateLoginUser(User user, String password) {
 
 		log.info("selectedPw:{} pw:{}", user.getPassword(), password);
-
+    
 		if (!encoder.matches(password, user.getPassword())) {
 			throw new RealChatWebException(INVALID_ACCOUNT);
 		}
