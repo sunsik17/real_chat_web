@@ -30,9 +30,7 @@ public class ChatRoomService {
 
 	public ChatRoom createRoom(String email, CreateChatRoomInfo createChatRoominfo) {
 
-		User user =
-			userRepository.findByUserEmail(email)
-				.orElseThrow(() -> new RealChatWebException(ErrorCode.INVALID_TOKEN));
+		User user = userRepository.getUserByUserEmail(email);
 
 		return ChatRoom.fromEntity(
 			chatRoomRepository.save(ChatRoomEntity.builder()
@@ -45,8 +43,7 @@ public class ChatRoomService {
 
 	public String inviteUser(String email, ChatRoom.Invite invite) {
 		User user =
-			userRepository.findByUserEmail(email)
-				.orElseThrow(() -> new RealChatWebException(ErrorCode.INVALID_TOKEN));
+			userRepository.getUserByUserEmail(email);
 		User inviteUser =
 			userRepository.findByUserEmail(invite.getEmail())
 				.orElseThrow(() -> new RealChatWebException(ErrorCode.INVALID_ACCOUNT));
@@ -64,6 +61,6 @@ public class ChatRoomService {
 		chatRoom.addUser(inviteUser);
 		chatRoomRepository.save(chatRoom);
 
-		return inviteUser.getUserEmail();
+		return invite.getEmail();
 	}
 }

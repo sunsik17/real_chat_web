@@ -21,9 +21,8 @@ public class JwtUtil {
 	@Value("${jwt.token.secret}")
 	private String secretKey;
 
-
 	public String getUserEmail(String token) {
-		return parseClaims(token).get(claimName, String.class);
+		return parseClaims(token).get(CLAIM_KEY, String.class);
 	}
 
 	public boolean validateToken(String token) {
@@ -35,7 +34,7 @@ public class JwtUtil {
 		return !parseClaims(token).getExpiration().before(new Date());
 	}
 
-	private Claims parseClaims(String token) {
+	public Claims parseClaims(String token) {
 		try {
 			return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody();
 		} catch (ExpiredJwtException e) {
@@ -45,7 +44,7 @@ public class JwtUtil {
 
 	public String createToken(String userEmail, String key) {
 		Claims claims = Jwts.claims(); // 일종의 map
-		claims.put(claimName, userEmail);
+		claims.put(CLAIM_KEY, userEmail);
 
 		long time = System.currentTimeMillis();
 

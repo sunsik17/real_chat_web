@@ -13,6 +13,7 @@ public enum ErrorCode {
 	EXPIRED_TOKEN("만료 된 TOKEN"),
 	INTERNAL_SERVER_ERROR("내부 서버 오류가 발생했습니다."),
 	THIS_EMAIL_ALREADY_EXISTS("해당 이메일은 이미 존재합니다."),
+	NO_CHATROOM_CREATED("없는 채팅방 입니다."),
 	PHONE_NUMBER_FORMAT_ERROR("잘못된 핸드폰번호 형식입니다.");
 
 
