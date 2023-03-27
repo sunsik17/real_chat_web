@@ -15,7 +15,7 @@ import lombok.Setter;
 public class ChatMessage {
 	private String sender;
 	private Long chatRoomId;
-	private Object message;
+	private String message;
 
 	public static ChatMessage fromEntity(ChatMessageEntity entity) {
 		return ChatMessage.builder()

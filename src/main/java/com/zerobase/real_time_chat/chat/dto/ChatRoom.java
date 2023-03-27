@@ -21,9 +21,11 @@ public class ChatRoom {
 
 	private Long ChatRoomId;
 	private List<String> members;
-	private List<ChatMessage> messages;
+	private String lastMessage;
 
 	public static ChatRoom fromEntity(ChatRoomEntity entity) {
+		int size = entity.getMessages() == null ? 0 : entity.getMessages().size();
+
 		return ChatRoom
 			.builder()
 			.ChatRoomId(entity.getId())
@@ -32,10 +34,7 @@ public class ChatRoom {
 				.stream()
 				.map(User::getUserEmail)
 				.collect(Collectors.toList()))
-			.messages(entity.getMessages()
-				.stream()
-				.map(ChatMessage::fromEntity)
-				.collect(Collectors.toList()))
+			.lastMessage(size == 0 ? null : entity.getMessages().get(size - 1).getMessage())
 			.build();
 	}
 	@Getter
