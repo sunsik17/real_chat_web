@@ -1,38 +1,33 @@
-package com.zerobase.real_time_chat.user.domain;
+package com.zerobase.real_time_chat.chat.domain;
 
-import com.zerobase.real_time_chat.domain.BaseTimeEntity;
-import javax.persistence.Column;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
+@Entity
+@Builder
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
-@ToString
-@Entity
-public class User extends BaseTimeEntity {
+public class ChatMessageEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	private String username;
-	@Column(unique = true)
-	private String userEmail;
-	private String password;
-	@Column(unique = true)
-	private String phoneNumber;
+	private String senderEmail;
+	@ManyToOne
+	@JoinColumn(name = "chatRoomId", nullable = false)
+	private ChatRoomEntity chatRoomEntity;
+	private String message;
 }
-
-
-

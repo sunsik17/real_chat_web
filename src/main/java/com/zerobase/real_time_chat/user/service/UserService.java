@@ -3,12 +3,12 @@ package com.zerobase.real_time_chat.user.service;
 import static com.zerobase.real_time_chat.type.ErrorCode.INVALID_ACCOUNT;
 import static com.zerobase.real_time_chat.type.ErrorCode.THIS_EMAIL_ALREADY_EXISTS;
 
+import com.zerobase.real_time_chat.exception.RealChatWebException;
 import com.zerobase.real_time_chat.security.JwtUtil;
 import com.zerobase.real_time_chat.user.domain.User;
 import com.zerobase.real_time_chat.user.dto.LoginUser;
 import com.zerobase.real_time_chat.user.dto.RegisterUser;
 import com.zerobase.real_time_chat.user.dto.UserInfo;
-import com.zerobase.real_time_chat.exception.RealChatWebException;
 import com.zerobase.real_time_chat.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,6 +23,7 @@ public class UserService {
 
 	private final UserRepository userRepository;
 	private final BCryptPasswordEncoder encoder;
+	private final JwtUtil jwtUtil;
 
 	@Value("${jwt.token.secret}")
 	private String key;
@@ -54,20 +55,22 @@ public class UserService {
 
 		validateLoginUser(user, request.getPassword());
 
-		return JwtUtil.createToken(user.getUserEmail(), key);
+		return jwtUtil.createToken(user.getUserEmail(), key);
+	}
+
+	public UserInfo details(String email) {
+		log.info(email);
+		User user =
+			userRepository.findByUserEmail(email)
+			.orElseThrow(() -> new RealChatWebException(INVALID_ACCOUNT));
+		return UserInfo.fromEntity(user);
 	}
 
 	private void validateLoginUser(User user, String password) {
 
-		String encodingPassword =
-			userRepository.findByUserEmail(user.getUserEmail())
-				.orElseThrow(
-					() -> new RealChatWebException(INVALID_ACCOUNT)
-				).getPassword();
-
-		log.info("selectedPw:{} pw:{}", encodingPassword, password);
-
-		if (!encoder.matches(password, encodingPassword)) {
+		log.info("selectedPw:{} pw:{}", user.getPassword(), password);
+    
+		if (!encoder.matches(password, user.getPassword())) {
 			throw new RealChatWebException(INVALID_ACCOUNT);
 		}
 	}
