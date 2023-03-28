@@ -1,0 +1,22 @@
+
+spring:
+  datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+    url: jdbc:mariadb://chatapp.cntnkosloixs.ap-northeast-2.rds.amazonaws.com:3306/chatapp
+    username: zerobase
+    password: man1957*
+  jpa:
+    generate-ddl: true
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    database-platform: org.hibernate.dialect.MariaDB103Dialect
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+
+jwt:
+  token:
+    secret: "p2s5v8y/B?E(H+MbQeThWmZq3t6w9z$C"
+server:
+  port: 8081
