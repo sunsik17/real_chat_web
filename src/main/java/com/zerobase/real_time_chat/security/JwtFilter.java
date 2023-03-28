@@ -30,16 +30,13 @@ public class JwtFilter extends OncePerRequestFilter {
 		FilterChain filterChain) throws ServletException, IOException {
 
 		String token = resolveTokenFromRequest(request);
-		log.info("token : {}", token);
 
 		//유효성 검사
 		if (!StringUtils.hasText(token)) {
-			log.error("authorization 을 잘못 보냈습니다.");
 			filterChain.doFilter(request, response);
 			return;
 		}
 		if (!jwtUtil.validateToken(token)) {
-			log.error("token 이 만료 되었습니다.");
 			filterChain.doFilter(request, response);
 			return;
 		}
