@@ -2,11 +2,12 @@
 
 ## 배포
 AWS EC2 : 3.34.191.128
-port : 8081
+
+ServerPort : 8081
 (DB, Server 인스턴스 연동)
 
 simpleTest_URL 
-: GET http://3.34.191.128/ping
+: GET http://3.34.191.128:8081/ping
 
 result
 : pong
