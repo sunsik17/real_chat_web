@@ -6,10 +6,10 @@ AWS EC2 : 3.34.191.128
 ServerPort : 8081
 (DB, Server 인스턴스 연동)
 
-simpleTest_URL 
+simpleControllerTest_URL 
 : GET http://3.34.191.128:8081/ping
 
-result
+Response
 : pong
 
 
