@@ -86,6 +86,7 @@ public class UserService {
 			.orElseThrow(() -> new RealChatWebException(INVALID_TOKEN));
 
 		user.setUsername(DELETE_USER_NAME);
+		user.setUserEmail(DELETE_USER_NAME);
 		userRepository.save(user);
 
 		List<ChatMessageEntity> messageEntities =

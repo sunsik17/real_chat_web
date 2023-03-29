@@ -27,7 +27,6 @@ public class User extends BaseTimeEntity {
 	private Long id;
 
 	private String username;
-	@Column(unique = true)
 	private String userEmail;
 	private String password;
 	@Column(unique = true)
