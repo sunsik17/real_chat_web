@@ -1,13 +1,13 @@
 # 실시간 채팅 서비스
 
 ## 배포
-AWS EC2 : 3.34.191.128
+AWS EC2 : 3.34.151.37
 
 ServerPort : 8081
 (DB, Server 인스턴스 연동)
 
 simpleControllerTest_URL 
-: GET http://3.34.191.128:8081/ping
+: GET http://3.34.151.37:8081/ping
 
 Response
 : pong
