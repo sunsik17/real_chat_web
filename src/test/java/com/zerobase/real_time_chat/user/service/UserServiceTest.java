@@ -8,12 +8,13 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
+import com.zerobase.real_time_chat.domain.user.service.UserService;
 import com.zerobase.real_time_chat.type.ErrorCode;
-import com.zerobase.real_time_chat.user.domain.User;
-import com.zerobase.real_time_chat.user.dto.RegisterUser;
-import com.zerobase.real_time_chat.user.dto.UserInfo;
+import com.zerobase.real_time_chat.domain.user.entity.User;
+import com.zerobase.real_time_chat.domain.user.dto.RegisterUser;
+import com.zerobase.real_time_chat.domain.user.dto.UserInfo;
 import com.zerobase.real_time_chat.exception.RealChatWebException;
-import com.zerobase.real_time_chat.user.repository.UserRepository;
+import com.zerobase.real_time_chat.domain.user.repository.UserRepository;
 import java.util.Optional;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

@@ -15,7 +15,7 @@ import org.springframework.util.StringUtils;
 @Component
 public class JwtUtil {
 
-	private static final Long expireTimeMilliSecond = 1000L * 60 * 60;
+	private static final Long expireTimeMilliSecond = 1000L * 60 * 60 * 24;
 	private static final String CLAIM_KEY = "userEmail";
 	private static final String ROLE = "USER";
 	@Value("${jwt.token.secret}")
@@ -42,7 +42,7 @@ public class JwtUtil {
 		}
 	}
 
-	public String createToken(String userEmail, String key) {
+	public String createToken(String userEmail) {
 		Claims claims = Jwts.claims(); // 일종의 map
 		claims.put(CLAIM_KEY, userEmail);
 
@@ -52,7 +52,7 @@ public class JwtUtil {
 			.setClaims(claims)
 			.setIssuedAt(new Date(time))
 			.setExpiration(new Date(time + expireTimeMilliSecond))
-			.signWith(SignatureAlgorithm.HS256, key)
+			.signWith(SignatureAlgorithm.HS256, secretKey)
 			.compact();
 	}
 	public UsernamePasswordAuthenticationToken getAuthentication(String token) {

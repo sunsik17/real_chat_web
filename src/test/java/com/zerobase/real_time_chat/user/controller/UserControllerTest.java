@@ -9,11 +9,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.zerobase.real_time_chat.controller.user.UserController;
 import com.zerobase.real_time_chat.security.JwtUtil;
-import com.zerobase.real_time_chat.user.domain.User;
-import com.zerobase.real_time_chat.user.dto.RegisterUser;
-import com.zerobase.real_time_chat.user.dto.UserInfo;
-import com.zerobase.real_time_chat.user.service.UserService;
+import com.zerobase.real_time_chat.domain.user.entity.User;
+import com.zerobase.real_time_chat.domain.user.dto.RegisterUser;
+import com.zerobase.real_time_chat.domain.user.dto.UserInfo;
+import com.zerobase.real_time_chat.domain.user.service.UserService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
