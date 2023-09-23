@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-//@PostAuthorize("hasAnyAuthority('USER')")
 public class ChatMessageController {
 	private final ChatMessageService chatMessageService;
 
