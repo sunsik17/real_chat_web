@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class ChatRoomService {
-	private static final String CHAT_ROOM_NAME_NULL_VALUE = "이름 없음";
+	
 	private final ChatRoomRepository chatRoomRepository;
 	private final UserRepository userRepository;
 	public List<ChatRoom> getAllChatRoom(String email) {
@@ -41,28 +41,22 @@ public class ChatRoomService {
 			chatRoomRepository.save(ChatRoomEntity.builder()
 				.name(createChatRoominfo.getName())
 				.users(List.of(user))
-				.messages(List.of())
+				.activation(false)
 				.build())
 		);
 	}
 
-	public String inviteUser(String email, ChatRoom.Invite invite) {
-		User user =
-			userRepository.getUserByUserEmail(email);
+	public String inviteUser(ChatRoom.Invite invite) {
+
 		User inviteUser =
 			userRepository.findByUserEmail(invite.getEmail())
 				.orElseThrow(() -> new RealChatWebException(ErrorCode.INVALID_ACCOUNT));
 
 		ChatRoomEntity chatRoom =
 			chatRoomRepository.findById(invite.getChatRoomId())
-				.orElseGet(() ->
-					chatRoomRepository.save(ChatRoomEntity.builder()
-						.name(CHAT_ROOM_NAME_NULL_VALUE)
-						.users(List.of(user, inviteUser))
-						.messages(List.of())
-						.build())
-			);
+				.orElseThrow(() -> new RealChatWebException(ErrorCode.NO_CHATROOM_CREATED));
 
+		if (!chatRoom.isActivation()) chatRoom.setActivation(true);
 		chatRoom.addUser(inviteUser);
 		chatRoomRepository.save(chatRoom);
 
