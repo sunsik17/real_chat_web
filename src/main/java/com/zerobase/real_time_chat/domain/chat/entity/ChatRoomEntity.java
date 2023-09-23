@@ -19,7 +19,6 @@ import lombok.Setter;
 
 @Entity
 @Getter
-@Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -28,12 +27,15 @@ public class ChatRoomEntity extends BaseTimeEntity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String name;
+
 	@OneToMany(fetch = FetchType.LAZY)
 	@Column
 	private List<User> users;
 	@OneToMany(mappedBy = "chatRoomEntity", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<ChatMessageEntity> messages;
 
+	@Setter
+	private boolean activation;
 	public void addUser(User user) {
 		this.users.add(user);
 	}
