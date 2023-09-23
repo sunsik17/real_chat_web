@@ -1,4 +1,4 @@
-package com.zerobase.real_time_chat.dto;
+package com.zerobase.real_time_chat.exception;
 
 import com.zerobase.real_time_chat.type.ErrorCode;
 import lombok.AllArgsConstructor;

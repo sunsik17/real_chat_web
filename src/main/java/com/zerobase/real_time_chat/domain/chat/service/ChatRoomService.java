@@ -21,10 +21,15 @@ public class ChatRoomService {
 	private final UserRepository userRepository;
 	public List<ChatRoom> getAllChatRoom(String email) {
 
-		return chatRoomRepository.findAllByUsers_UserEmail(email)
+		long start = System.currentTimeMillis();
+
+		List<ChatRoom> result = chatRoomRepository.findAllByUsers_UserEmail(email)
 				.stream()
 				.map(ChatRoom::fromEntity)
 				.collect(Collectors.toList());
+
+		System.out.println(System.currentTimeMillis() - start);
+		return result;
 	}
 
 

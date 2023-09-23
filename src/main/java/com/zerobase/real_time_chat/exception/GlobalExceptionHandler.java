@@ -3,7 +3,6 @@ package com.zerobase.real_time_chat.exception;
 import static com.zerobase.real_time_chat.type.ErrorCode.INTERNAL_SERVER_ERROR;
 import static com.zerobase.real_time_chat.type.ErrorCode.INVALID_REQUEST;
 
-import com.zerobase.real_time_chat.dto.ErrorResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
