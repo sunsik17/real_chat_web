@@ -39,9 +39,7 @@ public class ChatRoomController {
 
 	@PostMapping("/invite")
 	public ResponseEntity<?> inviteUser(
-		Authentication authentication,
 		@RequestBody ChatRoom.Invite invite) {
-		System.out.println(authentication.toString());
-		return ResponseEntity.ok().body(chatRoomService.inviteUser(authentication.getName(), invite));
+		return ResponseEntity.ok().body(chatRoomService.inviteUser(invite));
 	}
 }

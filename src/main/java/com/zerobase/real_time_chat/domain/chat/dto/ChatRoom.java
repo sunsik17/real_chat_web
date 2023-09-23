@@ -26,8 +26,7 @@ public class ChatRoom {
 	public static ChatRoom fromEntity(ChatRoomEntity entity) {
 		int size = entity.getMessages() == null ? 0 : entity.getMessages().size();
 
-		return ChatRoom
-			.builder()
+		return ChatRoom.builder()
 			.ChatRoomId(entity.getId())
 			.members(entity
 				.getUsers()
